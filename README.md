@@ -1,182 +1,100 @@
-# 📄 Proje Raporu
-**Proje Adı:** Customer Support Agent (Yerel LLM Entegrasyonlu)
+<div align="center">
 
-## 🛠️ Framework Kullanımı ve Kurulum Bilgisi
+# Customer Support Agent
 
-1.  Python 3.10+ bilgisayarınızda kurulu olmalıdır.
-2.  Gerekli Python paketlerini yüklemek için terminale şunu yazın:
-    ```bash
-    pip install streamlit requests
-    ```
-3.  Ollama isimli Local LLM çalıştırıcısını kurun ve çalıştırın:
-    ([https://ollama.com/download](https://ollama.com/download))
-4.  Ollama kurulduktan sonra, terminale şu komut ile Llama3 modelini indirin ve başlatın:
-    ```bash
-    ollama run llama3
-    ```
-5.  Proje dosyalarını bilgisayarınıza kopyalayın:
-    (Örneğin masaüstünde `YapayZeka` adlı bir klasörde)
-6.  Terminalde proje klasörüne gidin:
-    ```bash
-    cd C:\Users\leviv\YapayZeka
-    ```
-7.  Projeyi çalıştırın:
-    ```bash
-    streamlit run streamlit_app.py
-    ```
+**A local LLM pipeline that reads a customer message, understands it and answers it.**
 
-Bu adımlar tamamlandığında, uygulama tarayıcınızda açılacaktır.
+Every message is classified, its intent and sentiment are detected, it gets a priority score, and it is answered from a knowledge base or by Llama 3. All running locally.
 
-Yerel LLM (Llama3) ile çalışan müşteri destek asistanınız kullanıma hazırdır! 🚀
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-Llama%203-000000?style=flat-square&logo=ollama&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-UI-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
 
-## 🎯 Problemin Tanımı ve Projenin Amacı
+</div>
 
-Günümüzde e-ticaret platformları, hizmet sektörleri ve firmalar her gün binlerce müşteri sorusu ve şikayetiyle karşılaşmaktadır. Bu taleplerin hızlı, doğru ve kullanıcı odaklı şekilde cevaplanması müşteri memnuniyeti için çok önemlidir. Ancak bu yoğunluğu yönetmek, insan destek ekipleri için hem zaman alıcı hem de maliyetlidir. Özellikle basit ve tekrar eden soruların manuel olarak cevaplanması kaynak israfına yol açmaktadır.
+---
 
-Bu bağlamda geliştirilen Customer Support Agent projesi;
+## Why
 
-* Kullanıcılardan gelen mesajları anlayarak,
-* Kategorilendirerek,
-* Duygularını analiz ederek,
-* Öncelik sıralaması yaparak,
-* Gerekirse bilgi tabanından veya yapay zekadan hızlı yanıt üreterek,
-* Müşteri destek süreçlerini otomatik, akıllı ve yerel LLM tabanlı bir şekilde yönetmeyi amaçlamaktadır.
+Support teams spend a large part of their day on simple, repetitive questions and on deciding which messages need attention first. This agent triages every incoming message and drafts an answer, so people can focus on the cases that really need them.
 
-**Projenin temel hedefi:**
+## How it works
 
-* Müşteri destek süreçlerini hızlandırmak,
-* Hataları azaltmak,
-* Kullanıcı deneyimini geliştirmek,
-* Ve şirketlerin müşteri ilişkileri yönetimini yapay zeka destekli bir sisteme dönüştürmektir.
+The agent is built as a chain of small, independent nodes. Each node has one job and talks to Llama 3 through Ollama's local API.
 
-## ⚙️ Programın Ne Yaptığı ve Nasıl Kullanıldığı
-
-Uygulama Streamlit ile oluşturulan bir kullanıcı arayüzü üzerinden çalışır. Kullanıcı metin kutusuna sorun ya da mesajını yazar. Ardından sistem:
-
-1.  Mesajı sınıflandırır (örn. iade, teknik destek, şikayet vs.)
-2.  Kullanıcının niyetini (intent) çıkarır.
-3.  Duygusal tonu analiz eder.
-4.  Öncelik seviyesini belirler.
-5.  Gerekirse bilgi tabanında arama yapar.
-6.  Eğer bilgi bulunamazsa LLM'den (Llama3 modeli) özgün bir yanıt oluşturur.
-7.  Yanıtı özetler.
-8.  Tüm bu bilgileri bir log dosyasına kaydeder.
-
-**Kullanıcıya ise ekranda şu bilgiler gösterilir:**
-
-* Sınıflandırılan Kategori
-* Belirlenen Amaç
-* Algılanan Duygu
-* Öncelik Seviyesi
-* Verilen Yanıt
-* Cevap Özeti
-
-## 🧠 Programın Çalışma Mantığı ve Düğümlerin Açıklaması
-
-Sistem, bileşen bazlı (node tabanlı) bir mimari ile geliştirilmiştir. Aşağıda her bir düğümün görevi yer almaktadır:
-
-| Düğüm                 | Açıklama                                                                 |
-| --------------------- | ------------------------------------------------------------------------ |
-| `QuestionClassifier`  | Kullanıcının mesajını kategoriye ayırır (örn. iade, şikayet, bilgi vs.)   |
-| `IntentExtractor`     | Mesajın amacını belirler (örn. bilgilendirme, şikayet, teşekkür)         |
-| `SentimentDetector`   | Metindeki duygusal tonu (mutlu, öfkeli, üzgün vb.) analiz eder            |
-| `PriorityScorer`      | Mesajın önem derecesine göre “Düşük, Orta, Yüksek” puanı atar            |
-| `KnowledgeBaseSearcher` | Bilgi tabanında mesajla eşleşen kayıt varsa bunu yanıt olarak döner      |
-| `LLMClient`           | Bilgi tabanında sonuç bulunmazsa, Llama3 modelinden cevap üretir         |
-| `SummaryGenerator`    | LLM yanıtlarını kısa özet haline getirir (1-2 cümle)                     |
-| `ConversationLogger`  | Tüm sonuçları bir JSON dosyasına kaydeder (`conversation_logs.json`)    |
-| `Streamlit arayüzü`   | Kullanıcı girişleri, butonlar ve çıktıların gösterildiği grafik arayüzdür |
-
-Toplamda 9 bağımsız düğüm kullanılmıştır.
-
-## 🌐 Kullanılan Kodların Kaynakları
-
-Proje boyunca kullanılan kodların çoğu tarafımızdan geliştirilmiştir. Ancak aşağıdaki kaynaklardan yararlanılmıştır:
-
-* Ollama (Llama3) modeli — Yerel LLM çalıştırma altyapısı
-* Streamlit Resmi Dokümantasyonu – [https://docs.streamlit.io](https://docs.streamlit.io)
-* Python requests kütüphanesi — [https://pypi.org/project/requests/](https://pypi.org/project/requests/)
-
-Tüm LLM istemci çağrıları OpenAI veya Ollama API uyumlu formatta yazılmıştır.
-
-## 📂Proje Dosya Yapısı
-```bash
-YapayZeka/
-│
-├── agent/
-│   │
-│   └── nodes/
-│       │
-│       ├── classify_question.py
-│       ├── extract_intent.py
-│       ├── detect_sentiment.py
-│       ├── priority_scoring.py
-│       ├── knowledge_base_search.py
-│       ├── summary_generator.py
-│       └── logger.py
-│
-├── llm_connection/
-│   │
-│   └── llm_client.py
-│
-├── conversation_logs.json
-├── requirements.txt
-└── streamlit_app.py
+```mermaid
+flowchart TD
+    U[Customer message] --> C[QuestionClassifier<br/>Return · Tech support · Product info · Complaint]
+    U --> I[IntentExtractor<br/>Return · Exchange · Info · Complaint]
+    U --> S[SentimentDetector<br/>Angry · Sad · Happy · Neutral]
+    U --> P[PriorityScorer<br/>High · Medium · Low]
+    U --> K{KnowledgeBaseSearcher<br/>known question?}
+    K -- yes --> A[Answer from knowledge base]
+    K -- no --> L[LLMClient<br/>Llama 3 answer]
+    A --> M[SummaryGenerator<br/>1–2 sentence summary]
+    L --> M
+    C & I & S & P & M --> G[ConversationLogger<br/>conversation_logs.json]
+    G --> UI[Streamlit dashboard]
 ```
 
+| Node | Responsibility |
+|---|---|
+| `QuestionClassifier` | Assigns the message to a support category |
+| `IntentExtractor` | Determines what the customer wants to do |
+| `SentimentDetector` | Detects the emotional tone of the message |
+| `PriorityScorer` | Scores urgency as high, medium or low |
+| `KnowledgeBaseSearcher` | Returns a ready answer for frequently asked questions |
+| `LLMClient` | Generates a polite Turkish answer when the knowledge base has none |
+| `SummaryGenerator` | Summarizes the answer in one or two sentences |
+| `ConversationLogger` | Appends every result to `conversation_logs.json` |
 
+## Screenshots
 
-## Dosya ve Klasör Açıklamaları
+| | |
+|---|---|
+| <img src="screenshots/1.png" alt="Screenshot 1" /> | <img src="screenshots/2.png" alt="Screenshot 2" /> |
+| <img src="screenshots/3.png" alt="Screenshot 3" /> | <img src="screenshots/4.png" alt="Screenshot 4" /> |
+| <img src="screenshots/5.png" alt="Screenshot 5" /> | <img src="screenshots/6.png" alt="Screenshot 6" /> |
 
-| Dosya / Klasör        | Açıklama                                                                 |
-| --------------------- | ------------------------------------------------------------------------ |
-| `agent/nodes/`        | Ajanın farklı görevlerini yerine getiren tüm düğüm (node) dosyalarını içerir. |
-| `llm_connection/`   | Büyük dil modeli (LLM) ile bağlantıyı sağlayan istemci dosyasını içerir (Ollama gibi). |
-| `streamlit_app.py`    | Streamlit kullanıcı arayüzünü başlatan ana Python dosyasıdır.             |
-| `conversation_logs.json` | Kullanıcı ile yapılan tüm görüşmelerin kaydedildiği JSON formatındaki dosyadır. (Uygulama çalıştırıldığında otomatik olarak oluşur.) |
-| `requirements.txt`    | Projenin bağımlılıklarını (Streamlit, requests vb.) listeleyen dosyadır.    |
-| `Proje Raporu.docx`   | Proje ile ilgili detaylı bilgilerin yer aldığı rapor dosyasıdır (.pdf formatında da olabilir). |
+## Getting started
 
+**Requirements:** Python 3.10+ and [Ollama](https://ollama.com).
 
-## 📸 Ekran Görüntüleri
+```bash
+# 1. Pull the model (Ollama serves it on localhost:11434)
+ollama pull llama3
 
-### 1. Streamlit Uygulamasını Başlatma
-![1.png](./screenshots/1.png)
-Terminalde `streamlit run streamlit_app.py` komutu çalıştırıldı ve uygulama başarıyla başlatıldı.
+# 2. Clone and install
+git clone https://github.com/omeraydin00/customer-support-agent.git
+cd customer-support-agent/YapayZeka
+pip install streamlit requests
+
+# 3. Run
+streamlit run streamlit_app.py
+```
+
+The dashboard opens in your browser. Type a customer message and press **CEVAPLA**.
+
+## Project structure
+
+```
+YapayZeka/
+├── streamlit_app.py          # Dashboard and pipeline wiring
+├── llm_connection/
+│   └── llm_client.py         # Ollama client for answer generation
+├── agent/nodes/
+│   ├── classify_question.py
+│   ├── extract_intent.py
+│   ├── detect_sentiment.py
+│   ├── priority_scoring.py
+│   ├── knowledge_base_search.py
+│   ├── summary_generator.py
+│   └── logger.py
+└── conversation_logs.json    # Saved conversations
+```
 
 ---
 
-### 2. Yanıt Hazırlama Süreci
-![2.png](./screenshots/2.png)
-Kullanıcıdan "Ürünü hiç beğenmedim" şeklinde bir şikayet mesajı alındı. Kullanıcı mesajı işlenirken "YANIT HAZIRLANIYOR..." spinnerı gösterildi, sistem çalışıyor.
-
----
-
-### 3. Üretilen Yanıt ve Analiz Sonuçları
-![3.png](./screenshots/3.png)
-Sistem mesajı analiz ederek kategori, amaç, duygu, öncelik ve detaylı yanıt üretti ve ekrana yazdı.
-
----
-
-### 4. JSON Log Kaydının İncelenmesi
-![4.png](./screenshots/4.png)
-Kullanıcı sorusu ve sistem yanıtı başarılı şekilde `conversation_logs.json` dosyasına kaydedildi.
-
----
-
-### 5. Farklı Bir Kullanıcı Yanıtı
-![5.png](./screenshots/5.png)
-"Ürünü çok beğendim" gibi olumlu bir mesaj sonrası yeni analiz ve yanıt üretildi.
-
----
-
-### 6. Güncellenmiş JSON Logları
-![6.png](./screenshots/6.png)
-Tüm kullanıcı sorularının kayıt altına alındığı JSON dosyasının güncel hali görüntülendi.
-
----
-
-### 7. Proje Node Klasör Yapısı
-![7.png](./screenshots/7.png)
-Projedeki `agent/nodes/` klasöründeki tüm node dosyalarının doğru şekilde oluşturulduğu gösterildi.
-
+<div align="center">
+Built by <a href="https://github.com/omeraydin00">Ömer Faruk Aydın</a>
+</div>
