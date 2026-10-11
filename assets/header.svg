@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-label="Customer Support Agent: Sorts customer messages and drafts the replies.">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0D1117"/>
+      <stop offset="1" stop-color="#161B22"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.78" cy="0.5" r="0.42">
+      <stop offset="0" stop-color="#1F6FEB" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#1F6FEB" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#58A6FF"/>
+      <stop offset="1" stop-color="#BC8CFF"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#8B949E" opacity="0.18"/>
+    </pattern>
+    <clipPath id="frame"><rect width="1200" height="260" rx="16"/></clipPath>
+    <style>
+      .mono  { font: 500 15px 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8B949E; }
+      .name  { font: 700 48px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #F0F6FC; letter-spacing: -1px; }
+      .meta  { font: 400 18px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #8B949E; }
+      .stack { font: 500 15px 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; fill: url(#accent); }
+      .label { font: 600 14px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #C9D1D9; }
+      .small { font: 600 12px 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8B949E; }
+      .hub   { font: 700 13px 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; fill: #F0F6FC; letter-spacing: 1px; }
+      .flow { stroke-dasharray: 6 14; animation: dash 1.2s linear infinite; opacity: 0.55; }
+      @keyframes dash { to { stroke-dashoffset: -40; } }
+      .in { animation: in 0.8s ease-out backwards; }
+      .i1 { animation-delay: 0.05s; } .i2 { animation-delay: 0.2s; } .i3 { animation-delay: 0.35s; } .i4 { animation-delay: 0.5s; }
+      @keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      .pulse { transform-origin: 930px 130px; animation: pulse 2.4s ease-out infinite; } @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.8); opacity: 0; } }
+    </style>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="1200" height="260" fill="url(#bg)"/>
+    <rect width="1200" height="260" fill="url(#dots)"/>
+    <rect width="1200" height="260" fill="url(#glow)"/>
+    <rect x="0.75" y="0.75" width="1198.5" height="258.5" rx="15.5" fill="none" stroke="#30363D" stroke-width="1.5"/>
+
+    <text x="64" y="70" class="mono in i1">~/omeraydin00/customer-support-agent</text>
+    <text x="62" y="130" class="name in i2">Customer Support Agent</text>
+    <text x="64" y="172" class="meta in i3">Sorts customer messages and drafts the replies.</text>
+    <text x="64" y="212" class="stack in i4">Python · Ollama · Streamlit</text>
+
+    <g transform="translate(772 110)"><rect x="0" y="0" width="76" height="52" rx="9" fill="#161B22" stroke="#30363D" stroke-width="1.5"/><rect x="10" y="14" width="44" height="6" rx="3" fill="#8B949E" opacity="0.6"/><rect x="10" y="28" width="56" height="6" rx="3" fill="#30363D"/></g><g transform="translate(766 104)"><rect x="0" y="0" width="76" height="52" rx="9" fill="#161B22" stroke="#30363D" stroke-width="1.5"/><rect x="10" y="14" width="44" height="6" rx="3" fill="#8B949E" opacity="0.6"/><rect x="10" y="28" width="56" height="6" rx="3" fill="#30363D"/></g><g transform="translate(760 98)"><rect x="0" y="0" width="76" height="52" rx="9" fill="#161B22" stroke="#30363D" stroke-width="1.5"/><rect x="10" y="14" width="44" height="6" rx="3" fill="#8B949E" opacity="0.6"/><rect x="10" y="28" width="56" height="6" rx="3" fill="#30363D"/></g>
+    <path d="M852 130 L900 130" stroke="#30363D" stroke-width="2" fill="none"/><path d="M852 130 L900 130" class="flow" stroke="#58A6FF" stroke-width="2" fill="none" style="animation-delay:0.0s"/>
+    <circle r="4" fill="#79C0FF" opacity="0">
+      <animateMotion dur="1.2s" begin="0s" repeatCount="indefinite" path="M852 130 L900 130"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="1.2s" begin="0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="930" cy="130" r="30" fill="#1F6FEB" class="pulse"/>
+    <circle cx="930" cy="130" r="30" fill="#0D1117" stroke="url(#accent)" stroke-width="2.5"/>
+    <text x="930" y="135" text-anchor="middle" class="hub">LLM</text>
+    <path d="M960 130 C1000 130 1000 62 1040 62" stroke="#30363D" stroke-width="2" fill="none"/><path d="M960 130 C1000 130 1000 62 1040 62" class="flow" stroke="#58A6FF" stroke-width="2" fill="none" style="animation-delay:0.0s"/><circle r="4" fill="#58A6FF" opacity="0">
+      <animateMotion dur="2.4s" begin="0.9s" repeatCount="indefinite" path="M960 130 C1000 130 1000 62 1040 62"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" begin="0.9s" repeatCount="indefinite"/>
+    </circle><g transform="translate(1040 40)"><rect x="0" y="0" width="112" height="44" rx="22" fill="#161B22" stroke="#30363D" stroke-width="1.5"/><circle cx="22" cy="22" r="5" fill="#58A6FF"/><text x="36" y="27" class="label">Billing</text></g><path d="M960 130 C1000 130 1000 130 1040 130" stroke="#30363D" stroke-width="2" fill="none"/><path d="M960 130 C1000 130 1000 130 1040 130" class="flow" stroke="#58A6FF" stroke-width="2" fill="none" style="animation-delay:0.4s"/><circle r="4" fill="#BC8CFF" opacity="0">
+      <animateMotion dur="2.4s" begin="1.7000000000000002s" repeatCount="indefinite" path="M960 130 C1000 130 1000 130 1040 130"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" begin="1.7000000000000002s" repeatCount="indefinite"/>
+    </circle><g transform="translate(1040 108)"><rect x="0" y="0" width="112" height="44" rx="22" fill="#161B22" stroke="#30363D" stroke-width="1.5"/><circle cx="22" cy="22" r="5" fill="#BC8CFF"/><text x="36" y="27" class="label">Technical</text></g><path d="M960 130 C1000 130 1000 198 1040 198" stroke="#30363D" stroke-width="2" fill="none"/><path d="M960 130 C1000 130 1000 198 1040 198" class="flow" stroke="#58A6FF" stroke-width="2" fill="none" style="animation-delay:0.8s"/><circle r="4" fill="#F85149" opacity="0">
+      <animateMotion dur="2.4s" begin="2.5s" repeatCount="indefinite" path="M960 130 C1000 130 1000 198 1040 198"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" begin="2.5s" repeatCount="indefinite"/>
+    </circle><g transform="translate(1040 176)"><rect x="0" y="0" width="112" height="44" rx="22" fill="#161B22" stroke="#30363D" stroke-width="1.5"/><circle cx="22" cy="22" r="5" fill="#F85149"/><text x="36" y="27" class="label">Urgent</text></g>
+  </g>
+</svg>
