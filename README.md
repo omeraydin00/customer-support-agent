@@ -1,4 +1,6 @@
-# Customer Support Agent
+<p align="center">
+  <img src="./assets/header.svg" alt="Customer Support Agent" width="100%" />
+</p>
 
 Reads a customer message, works out what it is about and drafts a reply, all on a local model.
 
