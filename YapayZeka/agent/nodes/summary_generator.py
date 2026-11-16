@@ -1,27 +1,17 @@
 # agent/nodes/summary_generator.py
 # -*- coding: utf-8 -*-
 
-import requests
+from llm_connection.llm_client import LLMClient
+
 
 class SummaryGenerator:
-    def __init__(self, model: str = "llama3"):
-        self.base_url = "http://localhost:11434/api/generate"
-        self.model = model
+    def __init__(self, llm: LLMClient | None = None):
+        self.llm = llm or LLMClient()
 
-    def summarize(self, text: str) -> str:
+    def summarize(self, question: str, answer: str) -> str:
         prompt = (
-            "Aşağıda verilen müşteri destek yanıtını TÜRKÇE olacak şekilde 1-2 cümlede özetle:\n\n"
-            f"Yanıt: {text}\n\n"
-            "Özet (Türkçe):"
+            "Bir müşteri mesajı ve ona verilen yanıt aşağıda. Destek ekibi için TÜRKÇE tek cümlelik bir özet yaz: "
+            "müşteri ne istedi, ne cevap verildi. Yalnızca özeti yaz.\n\n"
+            f"Mesaj: {question}\n\nYanıt: {answer}\n\nÖzet:"
         )
-
-        payload = {
-            "model": self.model,
-            "prompt": prompt,
-            "stream": False
-        }
-
-        response = requests.post(self.base_url, json=payload)
-        response.raise_for_status()
-        result = response.json()
-        return result["response"].strip()
+        return self.llm.generate(prompt, temperature=0.2).strip('"')
